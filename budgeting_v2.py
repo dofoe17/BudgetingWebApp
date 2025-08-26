@@ -61,6 +61,8 @@ def main():
                 st.subheader('Expense Summary')
                 category_totals = debits_df.groupby('Category')['Amount'].sum().reset_index() 
                 category_totals = category_totals.sort_values(by='Amount', ascending=False)
+                expenses_over_time = debits_df.groupby('Date')['Amount'].sum().reset_index() 
+                expenses_over_time = expenses_over_time.sort_values(by='Date', ascending=False)
 
                 st.dataframe(
                     category_totals, 
@@ -78,6 +80,16 @@ def main():
                     values= 'Amount',
                     names= 'Category', 
                     title= 'Expense by Category'
+                )
+                st.plotly_chart(fig, use_container_width=True)
+
+                #Line chart visualisation
+                fig = px.line(
+                    expenses_over_time, 
+                    x='Date', 
+                    y='Amount',
+                    title='Expenses Through The Month', 
+                    markers=True
                 )
                 st.plotly_chart(fig, use_container_width=True)
 
