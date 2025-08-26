@@ -72,13 +72,15 @@ def categorise(desc):
 <img width="1788" height="500" alt="image" src="https://github.com/user-attachments/assets/51e35b69-13dd-42c1-bdd0-062ebee286fa" />
 
 
-Finally, we'll add an expense summary table and pie chart visaulisation
+Finally, we'll add an expense summary table and plotly chart visaulisations
 
 ```ruby
                 #Add visualisations 
                 st.subheader('Expense Summary')
                 category_totals = debits_df.groupby('Category')['Amount'].sum().reset_index() 
                 category_totals = category_totals.sort_values(by='Amount', ascending=False)
+                expenses_over_time = debits_df.groupby('Date')['Amount'].sum().reset_index() 
+                expenses_over_time = expenses_over_time.sort_values(by='Date', ascending=False)
 
                 st.dataframe(
                     category_totals, 
@@ -98,6 +100,18 @@ Finally, we'll add an expense summary table and pie chart visaulisation
                     title= 'Expense by Category'
                 )
                 st.plotly_chart(fig, use_container_width=True)
+
+                #Line chart visualisation
+                fig = px.line(
+                    expenses_over_time, 
+                    x='Date', 
+                    y='Amount',
+                    title='Expenses Through The Month', 
+                    markers=True
+                )
+                st.plotly_chart(fig, use_container_width=True)
 ```
 
 <img width="1842" height="839" alt="image" src="https://github.com/user-attachments/assets/6cf88445-e217-43a1-a38e-67de2534b78b" />
+<img width="1822" height="431" alt="image" src="https://github.com/user-attachments/assets/894314bd-9421-46f0-a6f0-c2ca03a94ebe" />
+
