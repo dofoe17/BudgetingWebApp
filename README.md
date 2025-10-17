@@ -81,31 +81,28 @@ Finally, we'll add an expense summary table and plotly chart visaulisations
                 category_totals = category_totals.sort_values(by='Amount', ascending=False)
                 expenses_over_time = debits_df.groupby('Date')['Amount'].sum().reset_index() 
                 expenses_over_time = expenses_over_time.sort_values(by='Date', ascending=False)
-                
-                col1, col2, col3 = st.columns([1, 0.5, 1])
-                with col1:
-                    #Pie chart visualisation 
-                    fig = px.pie(
-                        category_totals,
-                        values= 'Amount',
-                        names= 'Category', 
-                        title= 'Expense by Category'
-                    )
-                    st.plotly_chart(fig, use_container_width=True)
 
-                with col3: 
-                    st.dataframe(
-                        category_totals, 
-                        column_config={'Amount': st.column_config.NumberColumn('Amount', format='%.2f GBP')}, 
-                        use_container_width=True, #make table fit width of screen
-                        hide_index=True
-                    )
-                    #Add expense total figure
-                    debit_totals = debits_df['Amount'].sum()
-                    st.metric('Total Expenses', f'£{debit_totals:,.2f}')
+                st.dataframe(
+                    category_totals, 
+                    column_config={'Amount': st.column_config.NumberColumn('Amount', format='%.2f GBP')}, 
+                    use_container_width=True, #make table fit width of screen
+                    hide_index=True
+                )
+                #Add expense total figure
+                debit_totals = debits_df['Amount'].sum()
+                st.metric('Total Expenses', f'£{debit_totals:,.2f}')
+
+                #Pie chart visualisation 
+                fig = px.pie(
+                    category_totals,
+                    values= 'Amount',
+                    names= 'Category', 
+                    title= 'Expense by Category'
+                )
+                st.plotly_chart(fig, use_container_width=True)
 
                 #Line chart visualisation
-                fig = px.area(
+                fig = px.line(
                     expenses_over_time, 
                     x='Date', 
                     y='Amount',
@@ -113,11 +110,8 @@ Finally, we'll add an expense summary table and plotly chart visaulisations
                     markers=True
                 )
                 st.plotly_chart(fig, use_container_width=True)
-
-            with tab2: 
-                st.write(credits_df)
 ```
 
-<img width="1858" height="778" alt="image" src="https://github.com/user-attachments/assets/93c31a0c-75f1-45a3-930c-8983cfd68247" />
-
+<img width="1842" height="839" alt="image" src="https://github.com/user-attachments/assets/6cf88445-e217-43a1-a38e-67de2534b78b" />
+<img width="1822" height="431" alt="image" src="https://github.com/user-attachments/assets/894314bd-9421-46f0-a6f0-c2ca03a94ebe" />
 
