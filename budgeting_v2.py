@@ -54,7 +54,8 @@ def main():
             #Add streamlit tabs to our app 
             tab1, tab2 = st.tabs(['Expenses (Debits)', 'Payments (Credits)'])
             with tab1: 
-                st.write(debits_df) 
+                st.dataframe(debits_df,  
+                             hide_index=True) 
                 
                 #Add visualisations 
                 st.subheader('Expense Summary')
@@ -72,7 +73,7 @@ def main():
                         names= 'Category', 
                         title= 'Expense by Category'
                     )
-                    st.plotly_chart(fig, use_container_width=True)
+                    st.plotly_chart(fig)
 
                 with col3: 
                     st.dataframe(
@@ -93,7 +94,7 @@ def main():
                     title='Expenses Through The Month', 
                     markers=True
                 )
-                st.plotly_chart(fig, use_container_width=True)
+                st.plotly_chart(fig)
 
             with tab2: 
                 st.write(credits_df)
