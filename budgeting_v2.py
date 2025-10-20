@@ -62,7 +62,8 @@ def main():
                 category_totals = debits_df.groupby('Category')['Amount'].sum().reset_index() 
                 category_totals = category_totals.sort_values(by='Amount', ascending=False)
                 expenses_over_time = debits_df.groupby('Date')['Amount'].sum().reset_index() 
-                expenses_over_time = expenses_over_time.sort_values(by='Date', ascending=False)
+                expenses_over_time['Date'] = pd.to_datetime(expenses_over_time['Date'], format='%d/%m/%Y').dt.date
+                expenses_over_time = expenses_over_time.sort_values(by='Date', ascending=False) 
                 
                 col1, col2, col3 = st.columns([1, 0.5, 1])
                 with col1:
